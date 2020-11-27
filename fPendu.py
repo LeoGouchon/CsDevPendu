@@ -26,7 +26,7 @@ def choiceLetter():
     return letter
 
 
-def checkLetter(word):
+def checkLetter(word, lstLetter):
     """
     Fonction qui regarde si la lettre utilisé est dans le mot
     input : word = le mot à deviner
@@ -34,6 +34,7 @@ def checkLetter(word):
     output : False = lettre n'est pas dans le mot
     """
     letter = choiceLetter()
+    lstLetter.append(letter)
     for i in range(len(word)):
         #Si letter est un caractère de word, return True
         if word[i] == letter : 
@@ -41,7 +42,7 @@ def checkLetter(word):
     return False
 
 
-def checkWord(word, lstLetter):
+def displayWord(word, lstLetter):
     """
     Fonction qui affiche le mot avec tout les lettres déjà utilisé
     input : word = mot aléatoire
@@ -56,21 +57,39 @@ def checkWord(word, lstLetter):
             wordHide = wordHide.replace(letterWord, '_')                
     return wordHide
 
-
-def checkLife(hp,word):
+def checkLife(hp,word, lstLetter):
     """
     Fonction qui actualise le nbr de vie selon la lettre selectionner
     input : hp = pt de vie de l'utilisateur
     output : hp = nouveau point de vie de l'utilisateur
     output : "fin de la partie" si hp == 0
     """
-    if checkLetter(word) == False:
+    if checkLetter(word, lstLetter) == False:
         hp += -1
     #Pas sûr de ça
     #Si l'utilisateur n'a plus de vie, fin de la partie 
+    return hp
+
+def finPartie(hp, word, lstLetter):
+    """
+    Fonction qui permet de voir si la partie est finie
+    input : hp = pt de vie de l'utilisateur
+    input : word = le mot à trouver
+    input : lstLetter = liste des lettres utilisés
+    output : True = Partie est finie
+    output : False = Partie non finie
+    """
+    #Si l'utilisateur n'a plus de vie
     if hp <= 0 :
-        print("FIN DE LA PARTIE")
+        return True
+    #ou bien le mot avec les "_" est égal au mot complet
+    elif displayWord(word, lstLetter) == word :
+        return True
+    #Si 1 des 2 possibilités de finir la partie n'est pas validée
+    else :
+        return False
     return
+
 
 
 
@@ -78,4 +97,4 @@ def checkLife(hp,word):
 """------test pickWord------"""
 #print(pickWord())
 #print(choiceLetter())
-#print(checkWord("choucroute",['o','c']))
+#print(displayWord("choucroute",['o','c']))
