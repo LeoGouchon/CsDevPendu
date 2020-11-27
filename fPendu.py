@@ -8,7 +8,7 @@ def pickWord():
     """
     fichier = open('bddNomPendu.txt', 'r')
     allWord = (fichier.read()).split(" ")
-    word = allWord[randint(0, len(allWord))]
+    word = allWord[randint(0, len(allWord)-1)]
     fichier.close()
     return word
 
@@ -94,7 +94,7 @@ def finPartie(hp, word, lstLetter):
     return
 
 
-def lancerPartie():
+def partie():
     """
     Fonction qui lance une partie
     input : /
@@ -106,20 +106,19 @@ def lancerPartie():
     lstLetterUsed = [word[0]]
     #Point de vie
     hp = 8
-    print('nbr de vie : ',hp)
+    print('\nnbr de vie : ',hp)
     print(displayWord(word, lstLetterUsed))
 
     """Coeur de la partie"""
     while finPartie(hp, word, lstLetterUsed) == False :
         #on fait séléctionner une lettre
         hp = checkLife(hp, word, lstLetterUsed)
-        print('nbr de vie : ',hp)
+        print('\nnbr de vie : ',hp)
         print(displayWord(word, lstLetterUsed))
-
     return hp
 
 
-
+    
 
 """---PARTIE TEST FONCTION---"""
 """------test pickWord------"""
