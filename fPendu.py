@@ -21,8 +21,9 @@ def choiceLetter(lstLetter):
     output : letter = la lettre choisie
     """
     letter = input('Choisissez votre lettre :\n>>> ')
-    while letter not in ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'] or letter in lstLetter:
-        letter = input('Choisissez une lettre valide ou pas déjà utilisé :\n>>> ')
+    if letter.isalpha()==False or letter in lstLetter or len(letter)>1:
+        return False
+    letter.lower()
     #Une fois une lettre valide, on l'a rajoute dans lstLetter
     lstLetter.append(letter)
     return letter
@@ -36,6 +37,8 @@ def checkLetter(word, lstLetter):
     output : False = lettre n'est pas dans le mot
     """
     letter = choiceLetter(lstLetter)
+    if letter == False:
+        letter = choiceLetter(lstLetter)
     for i in range(len(word)):
         #Si letter est un caractère de word, return True
         if word[i] == letter : 
@@ -118,7 +121,6 @@ def partie():
     return hp
 
 
-    
 
 """---PARTIE TEST FONCTION---"""
 """------test pickWord------"""
