@@ -13,16 +13,18 @@ def pickWord():
     return word
 
 
-def choiceLetter():
+def choiceLetter(lstLetter):
     """
     Fonction qui permet à l'utilisateur de choisir une lettre
     On pourra rajouter des sécurités sur le choix de la lettre
-    input : /
+    input : lstLetter = liste des lettres déjà joué par l'utilisateur
     output : letter = la lettre choisie
     """
-    letter = input('Choisissez votre lettre :\n>>>')
-    while letter not in ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']:
-        letter = input('Choisissez votre lettre :\n>>>')
+    letter = input('Choisissez votre lettre :\n>>> ')
+    while letter not in ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'] or letter in lstLetter:
+        letter = input('Choisissez une lettre valide ou pas déjà utilisé :\n>>> ')
+    #Une fois une lettre valide, on l'a rajoute dans lstLetter
+    lstLetter.append(letter)
     return letter
 
 
@@ -33,29 +35,13 @@ def checkLetter(word, lstLetter):
     output : True = lettre dans le mot
     output : False = lettre n'est pas dans le mot
     """
-    letter = choiceLetter()
-    lstLetter.append(letter)
+    letter = choiceLetter(lstLetter)
     for i in range(len(word)):
         #Si letter est un caractère de word, return True
         if word[i] == letter : 
             return True
     return False
 
-
-def displayWord(word, lstLetter):
-    """
-    Fonction qui affiche le mot avec tout les lettres déjà utilisé
-    input : word = mot aléatoire
-    input : lstLetter = liste de toutes les lettres déjà utilisé par l'utilisateur
-    output : wordHide = mot avec les '_' 
-    """
-    wordHide = word
-    #On étudie chaque lettre du mot 
-    for letterWord in word:
-        #si la lettre n'est pas dans la liste des lettres rentrées par l'utilisateur, on la remplace par '_'
-        if letterWord not in lstLetter:
-            wordHide = wordHide.replace(letterWord, '_')                
-    return wordHide
 
 def checkLife(hp,word, lstLetter):
     """
@@ -69,6 +55,23 @@ def checkLife(hp,word, lstLetter):
     #Pas sûr de ça
     #Si l'utilisateur n'a plus de vie, fin de la partie 
     return hp
+
+
+def displayWord(word, lstLetter):
+    """
+    Fonction qui affiche le mot avec tout les lettres déjà utilisé
+    input : word = mot aléatoire
+    input : lstLetter = liste de toutes les lettres déjà utilisé par l'utilisateur
+    output : wordHide = mot avec les '-' 
+    """
+    wordHide = word
+    #On étudie chaque lettre du mot 
+    for letterWord in word:
+        #si la lettre n'est pas dans la liste des lettres rentrées par l'utilisateur, on la remplace par '_'
+        if letterWord not in lstLetter:
+            wordHide = wordHide.replace(letterWord, '-')                
+    return wordHide
+
 
 def finPartie(hp, word, lstLetter):
     """
@@ -89,6 +92,31 @@ def finPartie(hp, word, lstLetter):
     else :
         return False
     return
+
+
+def lancerPartie():
+    """
+    Fonction qui lance une partie
+    input : /
+    output : hp = nbr de vie restante à la fin de la partie
+    """
+
+    """Initialisation de la partie"""
+    word = pickWord()
+    lstLetterUsed = [word[0]]
+    #Point de vie
+    hp = 8
+    print('nbr de vie : ',hp)
+    print(displayWord(word, lstLetterUsed))
+
+    """Coeur de la partie"""
+    while finPartie(hp, word, lstLetterUsed) == False :
+        #on fait séléctionner une lettre
+        hp = checkLife(hp, word, lstLetterUsed)
+        print('nbr de vie : ',hp)
+        print(displayWord(word, lstLetterUsed))
+
+    return hp
 
 
 
