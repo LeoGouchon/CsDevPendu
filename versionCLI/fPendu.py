@@ -21,7 +21,7 @@ def choiceLetter(lstLetter):
     output : letter = la lettre choisie
     """
     letter = input('Choisissez votre lettre :\n>>> ')
-    if letter.isalpha()==False or letter in lstLetter or len(letter)>1:
+    if letter.isalpha()==False or letter in lstLetter or len(letter)!=1:
         return False
     letter.lower()
     #Une fois une lettre valide, on l'a rajoute dans lstLetter
