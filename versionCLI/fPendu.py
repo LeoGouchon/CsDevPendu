@@ -1,3 +1,9 @@
+"""
+Créé le 27/11/2020
+
+Par leo.gouchon
+"""
+
 from random import randint
 
 def pickWord():
