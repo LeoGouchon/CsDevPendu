@@ -1,3 +1,14 @@
+"""
+---------------------------
+Créé le 27/11/2020
+@author: leo.gouchon
+---------------------------
+Explication : Fichier contenant toutes les fonctions utiles pour le programme pendu en version Tkinter
+Bug : 0 visualisé
+To do list : /
+---------------------------
+"""
+
 from random import randint
 
 def pickWord():
