@@ -4,7 +4,8 @@ Créé le 27/11/2020
 @author: leo.gouchon
 ---------------------------
 Explication : Fichier contenant toutes les fonctions utiles pour le programme pendu en version Tkinter
-Bug : 0 visualisé
+Bug : def CheckLetter : le if ne sert à rien, il faut le changer pour obliger l'utilisateur à ré écrire une lettre
+      def pickWorld : pb pour ouvrir le fichier, il ne trouve pas la source
 To do list : /
 ---------------------------
 """
@@ -24,14 +25,12 @@ def pickWord():
     return word
 
 
-def choiceLetter(lstLetter):
+def choiceLetter(lstLetter, letter):
     """
-    Fonction qui permet à l'utilisateur de choisir une lettre
-    On pourra rajouter des sécurités sur le choix de la lettre
+    Fonction qui permet à l'utilisateur de choisir une lettre et vérifie sa pertinence
     input : lstLetter = liste des lettres déjà joué par l'utilisateur
     output : letter = la lettre choisie
     """
-    letter = input('Choisissez votre lettre :\n>>> ')
     if letter.isalpha()==False or letter in lstLetter or len(letter)>1:
         return False
     letter.lower()
@@ -40,16 +39,17 @@ def choiceLetter(lstLetter):
     return letter
 
 
-def checkLetter(word, lstLetter):
+def checkLetter(word, lstLetter, letterUsed):
     """
     Fonction qui regarde si la lettre utilisé est dans le mot
     input : word = le mot à deviner
     output : True = lettre dans le mot
     output : False = lettre n'est pas dans le mot
     """
-    letter = choiceLetter(lstLetter)
-    if letter == False:
-        letter = choiceLetter(lstLetter)
+    letter = choiceLetter(lstLetter, letterUsed)
+    #Pour le moment, le if ne fait rien
+    if letter == False: 
+        letter = choiceLetter(lstLetter, letterUsed)
     for i in range(len(word)):
         #Si letter est un caractère de word, return True
         if word[i] == letter : 
@@ -57,16 +57,15 @@ def checkLetter(word, lstLetter):
     return False
 
 
-def checkLife(hp,word, lstLetter):
+def checkLife(hp,word, lstLetter, letter):
     """
     Fonction qui actualise le nbr de vie selon la lettre selectionner
     input : hp = pt de vie de l'utilisateur
     output : hp = nouveau point de vie de l'utilisateur
     output : "fin de la partie" si hp == 0
     """
-    if checkLetter(word, lstLetter) == False:
+    if checkLetter(word, lstLetter, letter) == False:
         hp += -1
-    #Pas sûr de ça
     #Si l'utilisateur n'a plus de vie, fin de la partie 
     return hp
 
