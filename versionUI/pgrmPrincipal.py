@@ -14,27 +14,41 @@ from tkinter import Button, Tk, Label, StringVar, Entry
 
 import fPendu
 
-#CODE VERSION CLI A MODIFIER
 #Personal Best Score
 pb = 0
+#Initialisation du programme
+#On choisi un mot au hasard
+word = fPendu.pickWord()
+#Liste de toutes les lettres utilisés pas l'utilisateur
+lstLetterUsed = [word[0]]
+#Point de vie
+hp = StringVar()
+hp.set('8')
+#Mot à afficher
+dispWord = StringVar()
+dispWord.set(fPendu.displayWord(word, lstLetterUsed))
 
-choice = ""
-while choice != 'oui' and choice != 'non':
-    choice = input("Voulez-vous jouer ?\noui\nnon\n>>> ")
-while choice == 'oui':
-    #lance une partie
-    hp=fPendu.partie()
-    #résultat de la partie
-    if hp == 0 :
-        print("Vous avez perdu...")
-    else :
-        if hp >= pb:
-            pb = hp
-            print(20*"\n"+"Nouveau record : ",pb)
-        print("Bravo vous avez gagné !")
-    print("meilleur score : ", pb)
-    #choix de l'utilisateur de continuer ou arreter
-    choice = input("\nVoulez-vous jouer ?\noui\nnon\n>>> ")
+
+mw = Tk()
+mw.title("JEU DU PENDU")
+mw.geometry('500x500')
+
+
+def verif():
+    if fPendu.finPartie(hp, word, lstLetterUsed) == False:
+        mw.destroy()
+        return
+    #on fait séléctionner une lettre
+    hp.set(fPendu.checkLife(hp, word, lstLetterUsed,letterScan.get()))
+    dispWord.set(fPendu.displayWord(word, lstLetterUsed))
+    
+#Création bouton pour quitter le programme
+buttonQuitt = Button(mw, text = "QUITTER", fg = "red", command = mw.destroy)
+buttonQuitt.pack()
+
+#Création de la zone de saisie de lettre et son label associé et son bouton pour valider
+labelZoneSaisie = Label(mw, text = "Indiquer la lettre à étudier")
+labelZoneSaisie.pack()
 
 #Création fenêtre principale
 mw = Tk()
@@ -49,11 +63,15 @@ buttonQuitt.pack()
 labelZoneSaisie = Label(mw, text = "Indiquer la lettre à étudier")
 labelZoneSaisie.pack()
 
-lettreScan = StringVar() #La saisie sera sauvegardé ici pour l'utiliser dans les fonctions
-zoneSaisie = Entry(mw, textvariable = lettreScan)
+letterScan = StringVar()
+zoneSaisie = Entry(mw, textvariable = letterScan)
 zoneSaisie.focus_set()
 zoneSaisie.pack()
 
-boutonSaisie = Button(mw, text = "valider ma lettre", command = fPendu.choiceLetter(lettreScan))
+#Affichage du mot et des points de vie de l'utilisateur
+Label(mw, textvariable = dispWord).pack()
+Label(mw, textvariable = hp).pack()
+
+boutonSaisie = Button(mw, text = "valider ma lettre", command = verif)
 
 mw.mainloop()
