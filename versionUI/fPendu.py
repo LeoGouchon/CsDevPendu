@@ -104,31 +104,3 @@ def finPartie(hp, word, lstLetter):
     else :
         return False
     return
-
-
-def partie():
-    """
-    Fonction qui lance une partie
-    input : /
-    output : hp = nbr de vie restante à la fin de la partie
-    """
-
-    """Initialisation de la partie"""
-    word = pickWord()
-    lstLetterUsed = [word[0]]
-
-    """Coeur de la partie"""
-    while finPartie(hp, word, lstLetterUsed) == False :
-        #on fait séléctionner une lettre
-        hp = checkLife(hp, word, lstLetterUsed)
-        print('\nnbr de vie : ',hp)
-        print(displayWord(word, lstLetterUsed))
-    return hp
-
-
-
-"""---PARTIE TEST FONCTION---"""
-"""------test pickWord------"""
-#print(pickWord())
-#print(choiceLetter())
-#print(displayWord("choucroute",['o','c']))

@@ -19,11 +19,12 @@ mw = Tk()
 mw.title("JEU DU PENDU")
 mw.geometry('500x500')
 
+
+#--------Initialisation du programme--------
 #Stockage des images dans une liste
 image = [PhotoImage(file=f"./versionUI/bonhomme{9-i}.gif") for i in range(1,9)]
 #Personal Best Score
 pb = 0
-#Initialisation du programme
 #On choisi un mot au hasard
 word = fPendu.pickWord()
 #Liste de toutes les lettres utilisés pas l'utilisateur
@@ -34,16 +35,6 @@ hp.set(8)
 #Mot à afficher
 dispWord = StringVar()
 dispWord.set(fPendu.displayWord(word, lstLetterUsed))
-
-def reset():
-    print("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
-    hp.set(8)
-    dispImage.configure(mw, image = image[hp.get()])
-    dispImage.pack()
-    zoneSaisie.pack()
-    boutonSaisie.pack()
-    labelZoneSaisie.pack()
-    return
 
 def verif():
     #Si la lettre est déjà utilisé, on clear la zone de saisie 
@@ -60,34 +51,13 @@ def verif():
 
     #Si la partie est fini
     if hp.get() < 0: 
-        #Label(mw, text = "PERDU!").pack()
-        result = "DEFAITE"
-        endText.pack()
-        dispImage.pack_forget()
-        zoneSaisie.pack_forget()
-        boutonSaisie.pack_forget()
-        boutonNewGame = Button(mw, text = "Nouvelle partie", command = reset)
-        boutonNewGame.pack()
-
+        Label(mw, text = "DEFAITE!").pack()
+        return
 
     if fPendu.displayWord(word, lstLetterUsed) == word : 
-        #Label(mw, text = "BRAVO!").pack()
-        result = "VICTOIRE"
-        endText.pack()
-        hp.set(8)
-        dispImage.pack_forget()
-        zoneSaisie.pack_forget()
-        boutonSaisie.pack_forget()
-        labelZoneSaisie.pack_forget()
-        boutonNewGame = Button(mw, text = "Nouvelle partie", command = reset)
-        boutonNewGame.pack()
+        Label(mw, text = "VICTOIRE!").pack()
         return
     return
-
-#Texte à afficher en fin de partie
-result = "..."
-endText = Label(mw, textvariable = result)
-endText.pack_forget()
 
 #Création de la zone de saisie de lettre et son label associé et son bouton pour valider
 labelZoneSaisie = Label(mw, text = "Indiquer la lettre à étudier")
