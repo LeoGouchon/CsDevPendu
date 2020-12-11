@@ -5,6 +5,9 @@ Créé le 27/11/2020
 https://github.com/LeoGouchon/CsDevPendu.git
 ---------------------------
 Explication : Fichier contenant le code principal pour le jeu du pendu en version d'affichage Tkinter
+Problème du code : 
+- aucune façon de refaire une partie
+- la vérification de la lettre rentrée ne fonctionne pas
 ---------------------------
 """
 
@@ -37,18 +40,19 @@ dispWord = StringVar()
 dispWord.set(fPendu.displayWord(word, lstLetterUsed))
 
 def verif():
+    zoneSaisie.configure(bg = 'white')
     #Si la lettre est déjà utilisé, on clear la zone de saisie 
-    if letterScan in lstLetterUsed : 
+    if letterScan.get() in lstLetterUsed or len(letterScan.get()) > 1: 
         zoneSaisie.delete(0, 'end')
-        print("lettre déjà utilisé")
+        zoneSaisie.configure(bg = 'red')
         return
 
-    #On met à jour le nombre de point de vie selon la lettre entrée    
-    hp.set(fPendu.checkLife(hp.get(), word, lstLetterUsed,letterScan.get()))
-    dispWord.set(fPendu.displayWord(word, lstLetterUsed))
-    dispImage.configure(image = image[hp.get()])
-    zoneSaisie.delete(0, 'end')
-
+    #On met à jour le nombre de point de vie selon la lettre entrée 
+    else :  
+        hp.set(fPendu.checkLife(hp.get(), word, lstLetterUsed,letterScan.get()))
+        dispWord.set(fPendu.displayWord(word, lstLetterUsed))
+        dispImage.configure(image = image[hp.get()])
+        zoneSaisie.delete(0, 'end') 
     #Si la partie est fini
     if hp.get() < 0: 
         Label(mw, text = "DEFAITE!").pack()
@@ -64,7 +68,7 @@ labelZoneSaisie = Label(mw, text = "Indiquer la lettre à étudier")
 labelZoneSaisie.pack()
 
 letterScan = StringVar()
-zoneSaisie = Entry(mw, textvariable = letterScan)
+zoneSaisie = Entry(mw, textvariable = letterScan, bg = 'white')
 zoneSaisie.focus_set()
 zoneSaisie.pack()
 
@@ -81,6 +85,6 @@ dispImage.pack()
 
 #Création bouton pour quitter le programme
 buttonQuitt = Button(mw, text = "QUITTER", fg = "red", command = mw.destroy)
-buttonQuitt.pack()
+buttonQuitt.pack(side = "bottom")
 
 mw.mainloop()

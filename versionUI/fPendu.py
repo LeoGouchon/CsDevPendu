@@ -46,7 +46,6 @@ def checkLetter(word, lstLetter, letterUsed):
     output : False = lettre n'est pas dans le mot
     """
     letter = choiceLetter(lstLetter, letterUsed)
-    #Pour le moment, le if ne fait rien
     if letter == False: 
         letter = choiceLetter(lstLetter, letterUsed)
     for i in range(len(word)):
