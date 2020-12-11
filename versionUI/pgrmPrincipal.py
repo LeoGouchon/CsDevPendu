@@ -50,8 +50,9 @@ def verif():
     else :  
         hp.set(fPendu.checkLife(hp.get(), word, lstLetterUsed,(letterScan.get()).lower()))
         dispWord.set(fPendu.displayWord(word, lstLetterUsed))
-        dispImage.configure(image = image[hp.get()])
         zoneSaisie.delete(0, 'end') 
+        dispImage.configure(image = image[hp.get()])
+        
     #Si la partie est fini
     if hp.get() < 0: 
         wordFind.configure(textvariable = word ,bg = '#ee6f57', fg = '#f6f5f5')
@@ -81,7 +82,7 @@ buttonSaisie.pack()
 
 
 #Affichage du mot à deviner
-wordFind = Label(mw, textvariable = dispWord, width = "15", font=("Courier", 30), bg = "#f6f5f5")
+wordFind = Label(mw, textvariable = dispWord, width = "12", font=("Courier", 30), bg = "#f6f5f5")
 wordFind.pack()
 
 
