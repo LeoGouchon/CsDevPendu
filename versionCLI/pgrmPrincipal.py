@@ -1,7 +1,7 @@
 """
 Créé le 27/11/2020
-
 Par leo.gouchon
+https://github.com/LeoGouchon/CsDevPendu.git
 """
 
 import fPendu

@@ -30,7 +30,7 @@ def choiceLetter(lstLetter, letter):
     input : lstLetter = liste des lettres déjà joué par l'utilisateur
     output : letter = la lettre choisie
     """
-    if letter.isalpha()==False or letter in lstLetter or len(letter)>1:
+    if letter.isalpha() == False or letter in lstLetter or len(letter)>1:
         return False
     letter.lower()
     #Une fois une lettre valide, on l'a rajoute dans lstLetter
