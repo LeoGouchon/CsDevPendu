@@ -12,7 +12,7 @@ def pickWord():
     input : /
     output : un mot aléatoire
     """
-    fichier = open('bddNomPendu.txt', 'r')
+    fichier = open('./versionCLI/bddNomPendu.txt', 'r')
     allWord = (fichier.read()).split(" ")
     word = allWord[randint(0, len(allWord)-1)]
     fichier.close()

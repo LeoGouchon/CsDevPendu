@@ -9,7 +9,6 @@ Bug : def CheckLetter : le if ne sert à rien, il faut le changer pour obliger l
 To do list : /
 ---------------------------
 """
-
 from random import randint
 
 def pickWord():
@@ -18,7 +17,7 @@ def pickWord():
     input : /
     output : un mot aléatoire
     """
-    fichier = open('bddNomPendu.txt', 'r')
+    fichier = open('./versionUI/bddNomPendu.txt', 'r')
     allWord = (fichier.read()).split(" ")
     word = allWord[randint(0, len(allWord)-1)]
     fichier.close()
@@ -117,10 +116,6 @@ def partie():
     """Initialisation de la partie"""
     word = pickWord()
     lstLetterUsed = [word[0]]
-    #Point de vie
-    hp = 8
-    print('\nnbr de vie : ',hp)
-    print(displayWord(word, lstLetterUsed))
 
     """Coeur de la partie"""
     while finPartie(hp, word, lstLetterUsed) == False :
