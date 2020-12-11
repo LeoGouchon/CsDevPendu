@@ -7,7 +7,6 @@ https://github.com/LeoGouchon/CsDevPendu.git
 Explication : Fichier contenant le code principal pour le jeu du pendu en version d'affichage Tkinter
 Problème du code : 
 - aucune façon de refaire une partie
-- la vérification de la lettre rentrée ne fonctionne pas
 ---------------------------
 """
 
@@ -21,6 +20,7 @@ import fPendu
 mw = Tk()
 mw.title("JEU DU PENDU")
 mw.geometry('500x500')
+mw.configure(bg = '#1f3c88')
 
 
 #--------Initialisation du programme--------
@@ -42,14 +42,13 @@ dispWord.set(fPendu.displayWord(word, lstLetterUsed))
 def verif():
     zoneSaisie.configure(bg = 'white')
     #Si la lettre est déjà utilisé, on clear la zone de saisie 
-    if letterScan.get() in lstLetterUsed or len(letterScan.get()) > 1: 
+    if (letterScan.get()).lower() in lstLetterUsed or len(letterScan.get()) > 1 or (letterScan.get()).isalpha() == False: 
         zoneSaisie.delete(0, 'end')
-        zoneSaisie.configure(bg = 'red')
+        zoneSaisie.configure(bg = '#ee6f57')
         return
-
     #On met à jour le nombre de point de vie selon la lettre entrée 
     else :  
-        hp.set(fPendu.checkLife(hp.get(), word, lstLetterUsed,letterScan.get()))
+        hp.set(fPendu.checkLife(hp.get(), word, lstLetterUsed,(letterScan.get()).lower()))
         dispWord.set(fPendu.displayWord(word, lstLetterUsed))
         dispImage.configure(image = image[hp.get()])
         zoneSaisie.delete(0, 'end') 
@@ -68,23 +67,23 @@ labelZoneSaisie = Label(mw, text = "Indiquer la lettre à étudier")
 labelZoneSaisie.pack()
 
 letterScan = StringVar()
-zoneSaisie = Entry(mw, textvariable = letterScan, bg = 'white')
+zoneSaisie = Entry(mw, textvariable = letterScan, bg = '#f6f5f5')
 zoneSaisie.focus_set()
 zoneSaisie.pack()
-
-#Affichage du mot et des points de vie de l'utilisateur
-Label(mw, textvariable = dispWord).pack()
-Label(mw, textvariable = str(hp.get())).pack()
-
-boutonSaisie = Button(mw, text = "valider ma lettre", command = verif)
+boutonSaisie = Button(mw, text = "valider ma lettre", bg = "#f6f5f5", command = verif)
 boutonSaisie.pack()
+
+
+#Affichage du mot à deviner
+Label(mw, textvariable = dispWord, width = "15", font=("Courier", 30), bg = "#f6f5f5").pack()
+
 
 #Image du pendu
 dispImage = Label(mw, image = image[0])
 dispImage.pack()
 
 #Création bouton pour quitter le programme
-buttonQuitt = Button(mw, text = "QUITTER", fg = "red", command = mw.destroy)
+buttonQuitt = Button(mw, text = "QUITTER", fg = "black", bg = "#ee6f57", borderwidth = 3, command = mw.destroy)
 buttonQuitt.pack(side = "bottom")
 
 mw.mainloop()
