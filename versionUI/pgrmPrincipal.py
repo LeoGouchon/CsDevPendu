@@ -5,8 +5,8 @@ Créé le 27/11/2020
 https://github.com/LeoGouchon/CsDevPendu.git
 ---------------------------
 Explication : Fichier contenant le code principal pour le jeu du pendu en version d'affichage Tkinter
-Problème du code : 
-- aucune façon de refaire une partie
+Problème(s) du code : 
+On ne peut pas relancer de partie
 ---------------------------
 """
 
@@ -54,28 +54,35 @@ def verif():
         zoneSaisie.delete(0, 'end') 
     #Si la partie est fini
     if hp.get() < 0: 
-        Label(mw, text = "DEFAITE!").pack()
+        wordFind.configure(textvariable = word ,bg = '#ee6f57', fg = '#f6f5f5')
+        buttonSaisie.pack_forget()
+        zoneSaisie.pack_forget()
+        labelZoneSaisie.configure(text = "DEFAITE !")
         return
 
     if fPendu.displayWord(word, lstLetterUsed) == word : 
-        Label(mw, text = "VICTOIRE!").pack()
+        wordFind.configure(bg = '#070d59', fg = '#f6f5f5')
+        buttonSaisie.pack_forget()
+        zoneSaisie.pack_forget()
+        labelZoneSaisie.configure(text = "VICTOIRE !")
         return
     return
 
 #Création de la zone de saisie de lettre et son label associé et son bouton pour valider
-labelZoneSaisie = Label(mw, text = "Indiquer la lettre à étudier")
+labelZoneSaisie = Label(mw, text = "Indiquer la lettre à étudier", bg = '#1f3c88', fg = '#f6f5f5')
 labelZoneSaisie.pack()
 
 letterScan = StringVar()
 zoneSaisie = Entry(mw, textvariable = letterScan, bg = '#f6f5f5')
 zoneSaisie.focus_set()
 zoneSaisie.pack()
-boutonSaisie = Button(mw, text = "valider ma lettre", bg = "#f6f5f5", command = verif)
-boutonSaisie.pack()
+buttonSaisie = Button(mw, text = "valider ma lettre", bg = "#f6f5f5", command = verif)
+buttonSaisie.pack()
 
 
 #Affichage du mot à deviner
-Label(mw, textvariable = dispWord, width = "15", font=("Courier", 30), bg = "#f6f5f5").pack()
+wordFind = Label(mw, textvariable = dispWord, width = "15", font=("Courier", 30), bg = "#f6f5f5")
+wordFind.pack()
 
 
 #Image du pendu
